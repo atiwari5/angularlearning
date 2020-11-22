@@ -1,33 +1,48 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeeService } from '../employee.service';
 
 @Component({
   selector: 'app-employeelist',
   template: `
   <h2>
-    Employee List
+    Employee List from service 
   </h2>
   <ul *ngFor="let employee of employees">
    <li>{{employee.name}}</li>
 
   </ul>
-  `
+
+  <h2>
+    Employee List from HTTPS
+  </h2>
+  <h2>
+    {{errorMsg}}
+  </h2>
+  
+  <ul *ngFor="let employe of employeeshttp">
+   <li>{{employe.name}}</li>
+
+  </ul>
+
+`
   ,
   styleUrls: ['./employeelist.component.css']
 })
 export class EmployeelistComponent implements OnInit {
 
-  public employees = [
-    {"id": 1 , "name" : "Amit" , "age" : 40},
-    {"id": 2 , "name" : "Shrey" , "age" : 20},
-    {"id": 3 , "name" : "Maninder" , "age" : 30},
-    {"id": 4 , "name" : "Sai" , "age" : 25},
-    {"id": 5 , "name" : "Honey" , "age" : 35},
-    {"id": 6 , "name" : "Ajay" , "age" : 36},
-  ]
+  public employees = []
+  public employeeshttp = []
+  public errorMsg = ""
 
-  constructor() { }
+
+  constructor(private _employeeservice : EmployeeService) { }
 
   ngOnInit(): void {
+    this.employees = this._employeeservice.getemployee()
+    this._employeeservice.getemployeehttp()
+        .subscribe(data => this.employeeshttp = data
+          ,error=>this.errorMsg = error);
+        
   }
 
 }
