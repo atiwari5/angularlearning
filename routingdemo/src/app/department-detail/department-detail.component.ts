@@ -10,6 +10,12 @@ import { ActivatedRoute , ParamMap, Router } from '@angular/router';
     You Selected departemnt with id = {{departmentID}}
     </h3>
 
+    <p>
+    <button (click)='OnClickOverview()'>Overview</button>
+    <button (click)='OnClickContacts()'>Contacts</button>
+    </p>
+    <router-outlet></router-outlet>
+    
     <a (click)="onClickPrev()">Previous</a>
     <a (click)="onClickNext()">Next</a>
 
@@ -37,18 +43,36 @@ export class DepartmentDetailComponent implements OnInit {
 
   onClickPrev(){
     let prevId = this.departmentID -1 
-    this.router.navigate(['/departments',prevId])
-
+    // absolute path
+    //this.router.navigate(['/departments',prevId])
+    // Relative path
+    this.router.navigate(['../', prevId] , {relativeTo: this.route});
   }
 
   onClickNext(){
     
     let nextId = this.departmentID + 1 
-    this.router.navigate(['/departments',nextId])
+   //absolute path
+   
+   // this.router.navigate(['/departments',nextId])
+  // Relative path 
+  this.router.navigate(['../' , nextId] , {relativeTo: this.route})
   }
 
   onClickBack(){
     let currentID = this.departmentID
-    this.router.navigate(['/departments',{id:currentID}])
+   // absolute path
+    // this.router.navigate(['/departments',{id:currentID}])
+
+    // relative path 
+    this.router.navigate(['../', {id:currentID}] , {relativeTo : this.route})
   }
+
+  OnClickOverview(){
+    this.router.navigate(['overview'] , {relativeTo : this.route})
+  }
+
+  OnClickContacts(){
+    this.router.navigate(['contact'] , {relativeTo : this.route})
+  }  
 }

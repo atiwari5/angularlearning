@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
   declarations: [
     AppComponent,
     routingComponents,
+    DepartmentOverviewComponent,
+    DepartmentContactComponent,
      ],
   imports: [
     BrowserModule,
